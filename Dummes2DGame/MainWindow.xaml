@@ -1,0 +1,48 @@
+﻿<Window x:Class="Dummes2DGame.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Dummes2DGame"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="610" Width="570" KeyDown="Window_KeyDown">
+    <Window.Resources>
+        <DataTemplate x:Key="Level2">
+            <Grid Visibility="{Binding Visibility}">
+                <Image Source="{Binding ObjectImage}" Width="50" Height="50" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="Level1">
+            <ItemsControl ItemsSource="{Binding}" ItemTemplate="{DynamicResource Level2}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid Background="White">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="Diamenten: " FontSize="20" FontWeight="Bold" />
+                <Label Content="{Binding Path=(local:MainView.Diamonds)}" FontSize="20" FontWeight="Bold" />
+                <Label Content="Level: " FontSize="20" FontWeight="Bold" />
+                <Label Content="{Binding Path=(local:MainView.Level)}" FontSize="20" FontWeight="Bold" />
+                <Label Content="HighScore: " FontSize="20" FontWeight="Bold" />
+                <Label Content="{Binding Path=(local:MainView.HighScore)}" FontSize="20" FontWeight="Bold" />
+            </StackPanel>
+            <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <ItemsControl Name="map" ItemTemplate="{DynamicResource Level1}" />
+                    <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height=" 100" Visibility="Hidden">
+                        <TextBlock DockPanel.Dock="Top" Text="" TextAlignment="Center" FontSize="30" />
+                        <Button DockPanel.Dock="Bottom" Visibility="Visible" Width="100" Height="30" />
+                    </DockPanel>
+                </Grid>
+            </ScrollViewer>
+        </StackPanel>
+    </Grid>
+</Window>
